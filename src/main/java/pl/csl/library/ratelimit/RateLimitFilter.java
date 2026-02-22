@@ -25,7 +25,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        // Limitujemy tylko wyszukiwarkę
+        // tylko wyszukiwanie jest klmimitowane
         String path = request.getRequestURI();
         return !path.startsWith("/api/books/search");
     }
@@ -41,7 +41,6 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
         ConsumptionProbe probe = bucket.tryConsumeAndReturnRemaining(1);
 
-        // Dodatkowe nagłówki "ładne" do debugu/monitoringu
         response.setHeader("X-Rate-Limit-Remaining", String.valueOf(probe.getRemainingTokens()));
 
         if (probe.isConsumed()) {
@@ -65,16 +64,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
             return rateLimitService.resolveBucketForAuthenticatedUser(principal.getId());
         }
 
-        String ip = clientIp(request);
+        String ip = request.getRemoteAddr();
         return rateLimitService.resolveBucketForAnonymousIp(ip);
-    }
-
-    private String clientIp(HttpServletRequest request) {
-        // Jeśli kiedyś postawisz reverse proxy (nginx), to będzie potrzebne
-        String xff = request.getHeader("X-Forwarded-For");
-        if (xff != null && !xff.isBlank()) {
-            return xff.split(",")[0].trim();
-        }
-        return request.getRemoteAddr();
     }
 }

@@ -13,6 +13,7 @@ import pl.csl.library.service.AuthService;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5174")
 @RequestMapping("/api/auth")
 public class AuthController {
 
