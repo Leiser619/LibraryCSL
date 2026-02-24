@@ -8,7 +8,7 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       devOptions: {
-        enabled: true, // PWA działa też w dev (przydatne do testów)
+        enabled: true,
       },
       includeAssets: ["favicon.ico", "vite.svg"],
       manifest: {
@@ -54,5 +54,10 @@ export default defineConfig({
         ],
       },
     }),
-  ],
+  ],test: {
+            environment: "jsdom",
+            setupFiles: "./src/test/setup.ts",
+            globals: true,
+            css: true,
+          },
 });

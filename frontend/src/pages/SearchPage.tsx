@@ -18,8 +18,8 @@ export default function SearchPage() {
 const myBooksQuery = useQuery({
   queryKey: ["myBooks"],
   queryFn: getMyBooks,
-  staleTime: 1000 * 60 * 5,          // 5 min świeże
-  gcTime: 1000 * 60 * 60 * 24 * 7,   // 7 dni w cache
+  staleTime: 1000 * 60 * 5,          // 5 min
+  gcTime: 1000 * 60 * 60 * 24 * 7,   // 7dni w cache
 });
 
 
