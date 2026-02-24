@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 export default function LibraryPage() {
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["myBooks"],
-    queryFn: getMyBooks,
-  });
+const { data, isLoading } = useQuery({
+  queryKey: ["myBooks"],
+  queryFn: getMyBooks,
+  staleTime: 1000 * 60 * 5,
+  gcTime: 1000 * 60 * 60 * 24 * 7,
+});
 
   const deleteMutation = useMutation({
     mutationFn: removeMyBook,

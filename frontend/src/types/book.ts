@@ -9,9 +9,9 @@ export type GoogleBook = {
 
 export type BookSearchResponse = {
   items: GoogleBook[];
-  page: number;
+  page: number;       // backend: 1..n
   size: number;
-  total: number;
+  totalItems: number; // ✅
 };
 
 export type ReadBookResponse = {
