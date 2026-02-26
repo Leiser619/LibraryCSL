@@ -13,12 +13,15 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173", "http://localhost:5174")
+                registry.addMapping("/api/**")
+                        .allowedOrigins(
+                                "http://localhost:5174",  // vite dev
+                                "http://localhost:5173"   // docker (nginx na 5173 -> 80 w środku)
+                        )
                         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .exposedHeaders("Authorization")
-                        .allowCredentials(true);
+                        .exposedHeaders("Authorization");
+                // .allowCredentials(true); // włącz tylko jeśli auth jest na cookies
             }
         };
     }

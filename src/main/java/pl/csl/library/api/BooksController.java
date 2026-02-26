@@ -11,7 +11,6 @@ import pl.csl.library.service.GoogleBooksService;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5174")
 @RequestMapping("/api/books")
 public class BooksController {
 

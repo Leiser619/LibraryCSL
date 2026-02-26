@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react-swc";
 import { VitePWA } from "vite-plugin-pwa";
 
@@ -7,9 +7,6 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      devOptions: {
-        enabled: true,
-      },
       includeAssets: ["favicon.ico", "vite.svg"],
       manifest: {
         name: "Library",
@@ -20,19 +17,10 @@ export default defineConfig({
         display: "standalone",
         start_url: "/",
         icons: [
-          {
-            src: "/vite.svg",
-            sizes: "192x192",
-            type: "image/svg+xml",
-          },
-          {
-            src: "/vite.svg",
-            sizes: "512x512",
-            type: "image/svg+xml",
-          },
+          { src: "/vite.svg", sizes: "192x192", type: "image/svg+xml" },
+          { src: "/vite.svg", sizes: "512x512", type: "image/svg+xml" },
         ],
       },
-
       workbox: {
         runtimeCaching: [
           {
@@ -42,22 +30,30 @@ export default defineConfig({
             handler: "NetworkFirst",
             options: {
               cacheName: "api-cache",
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 7, // 7 dni
-              },
-              cacheableResponse: {
-                statuses: [200],
-              },
+              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 7 },
+              cacheableResponse: { statuses: [200] },
             },
           },
         ],
       },
     }),
-  ],test: {
-            environment: "jsdom",
-            setupFiles: "./src/test/setup.ts",
-            globals: true,
-            css: true,
-          },
+  ],
+
+  server: {
+    port: 5174,
+    proxy: {
+      "/api": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        ws: true,
+      },
+    },
+  },
+
+  test: {
+    environment: "jsdom",
+    setupFiles: "./src/test/setup.ts",
+    globals: true,
+    css: true,
+  },
 });

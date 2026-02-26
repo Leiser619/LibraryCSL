@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5174")
 @RequestMapping("/api/me/books")
 public class MyReadBooksController {
 

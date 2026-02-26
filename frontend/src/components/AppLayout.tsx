@@ -21,10 +21,11 @@ export default function AppLayout() {
             <NavLink to="/app/search" className={({ isActive }) => cn(isActive)}>
               Szukaj
             </NavLink>
+            <div></div>
             <NavLink to="/app/library" className={({ isActive }) => cn(isActive)}>
               Moja biblioteka
             </NavLink>
-
+            <div></div>
             <button
               className="ml-2 px-3 py-2 rounded-lg border hover:bg-gray-50"
               onClick={() => {
